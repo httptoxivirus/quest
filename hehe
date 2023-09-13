@@ -1,0 +1,44 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+int calc(int n1,int n2, char op) {
+    switch(op) {
+        case '+': return n2+n1;
+        case '-': return n2-n1;
+    }
+    return 0;
+}
+
+int main() {
+    string s = "23+12-2";
+    cout<<s;
+    stack<int> st;
+    stack<char> oper;
+    int num = 0, ans = 0 , num1 , num2;
+    char o;
+    for(int i=0; s[i]!='\0'; i++) {
+        while(s[i] != '+' && s[i] != '-') {
+            num = (num * 10) + (s[i]-'0');
+            i++;
+        }
+        st.push(num);
+        if(s[i] == '+' || s[i] == '-')
+            oper.push(s[i]);
+
+    }
+    
+    while(!st.empty()) {
+    num1 = st.top();
+    st.pop();
+    num2 = st.top();
+    st.pop();
+    o = oper.top();
+    oper.pop();
+    ans = calc(num1,num2,o);
+    st.push(ans);
+    }
+    
+    cout<<st.top();
+    return 0;
+}
